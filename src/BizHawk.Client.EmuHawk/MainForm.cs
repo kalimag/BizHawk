@@ -189,6 +189,7 @@ namespace BizHawk.Client.EmuHawk
 #if DEBUG
 			AddDebugMenu();
 #endif
+			_apStateMenuManager = new(this, _stateSlots, Config);
 		}
 
 		static MainForm()
@@ -1629,6 +1630,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private Size _lastVideoSize = new Size(-1, -1), _lastVirtualSize = new Size(-1, -1);
 		private readonly SaveSlotManager _stateSlots = new SaveSlotManager();
+		private ArcadePit.StateMenuManager _apStateMenuManager;
 
 		// AVI/WAV state
 		private IVideoWriter _currAviWriter;
