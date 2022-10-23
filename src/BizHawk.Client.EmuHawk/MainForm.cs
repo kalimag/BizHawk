@@ -189,6 +189,8 @@ namespace BizHawk.Client.EmuHawk
 #if DEBUG
 			AddDebugMenu();
 #endif
+
+			InitializeArcadePit();
 		}
 
 		static MainForm()
