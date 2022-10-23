@@ -93,7 +93,8 @@ namespace BizHawk.Client.Common
 				}
 			}
 
-			if (_movieSession.Movie.IsActive())
+			// don't save input log in state if RegularStatesForMoviesh is enabled to keep size small
+			if (_movieSession.Movie.IsActive() && !config.RegularStatesForMovies)
 			{
 				bs.PutLump(BinaryStateLump.Input,
 					tw =>

@@ -11,5 +11,6 @@
 		public bool SaveScreenshot { get; set; } = true;
 		public int BigScreenshotSize { get; set; } = 128 * 1024;
 		public bool NoLowResLargeScreenshots { get; set; }
+		public bool RegularStatesForMovies { get; set; }
 	}
 }

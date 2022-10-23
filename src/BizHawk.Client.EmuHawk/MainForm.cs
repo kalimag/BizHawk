@@ -3638,7 +3638,7 @@ namespace BizHawk.Client.EmuHawk
 				name += $".{bsnes.CurrentProfile}";
 			}
 
-			if (MovieSession.Movie.IsActive())
+			if (MovieSession.Movie.IsActive() && !Config.Savestates.RegularStatesForMovies)
 			{
 				name += $".{Path.GetFileNameWithoutExtension(MovieSession.Movie.Filename)}";
 			}
@@ -4199,6 +4199,13 @@ namespace BizHawk.Client.EmuHawk
 			if (IsSavestateSlave)
 			{
 				Master.LoadState();
+				return;
+			}
+
+			// regular states don't contain input logs, which will crash bizhawk if loaded while a movie is playing
+			if (MovieSession.Movie.IsActive() && Config.Savestates.RegularStatesForMovies)
+			{
+				AddOnScreenMessage($"Unavailable during movies while \"Save Regular States\" is enabled");
 				return;
 			}
 
