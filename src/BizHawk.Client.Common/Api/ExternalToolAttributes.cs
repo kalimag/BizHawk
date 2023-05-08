@@ -164,4 +164,20 @@ namespace BizHawk.Client.Common
 		public ExternalToolEmbeddedIconAttribute(string resourcePath)
 			=> ResourcePath = resourcePath;
 	}
+
+	/// <summary>
+	/// Specifies an assembly that should be loaded before the tool.
+	/// </summary>
+	[AttributeUsage(AttributeTargets.Assembly)]
+	public sealed class ExternalToolDependencyAttribute : Attribute
+	{
+		/// <summary>Path to the dependency assembly, relative to the ExternalTools directory.</summary>
+		public string Path { get; }
+
+		/// <param name="path">Path to the dependency assembly, relative to the ExternalTools directory.</param>
+		public ExternalToolDependencyAttribute(string path)
+		{
+			Path = path;
+		}
+	}
 }

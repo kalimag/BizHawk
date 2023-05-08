@@ -121,6 +121,12 @@ namespace BizHawk.Client.EmuHawk
 				if (!OSTailoredCode.IsUnixHost) MotWHack.RemoveMOTW(fileName);
 				var asmBytes = File.ReadAllBytes(fileName);
 				var externalToolFile = Assembly.Load(asmBytes);
+
+				foreach (var toolDependencyAttribute in externalToolFile.GetCustomAttributes<ExternalToolDependencyAttribute>())
+				{
+					Assembly.LoadFrom(Path.Combine(_config.PathEntries[PathEntryCollection.GLOBAL, "External Tools"].Path, toolDependencyAttribute.Path));
+				}
+
 				var entryPoint = externalToolFile.GetTypes()
 					.SingleOrDefault(t => typeof(IExternalToolForm).IsAssignableFrom(t) && t.GetCustomAttributes().OfType<ExternalToolAttribute>().Any());
 				if (entryPoint == null) throw new ExternalToolAttribute.MissingException();
