@@ -166,18 +166,21 @@ namespace BizHawk.Client.Common
 	}
 
 	/// <summary>
-	/// Specifies an assembly that should be loaded before the tool.
+	/// Specifies assemblies that should be loaded before the tool.
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Assembly)]
-	public sealed class ExternalToolDependencyAttribute : Attribute
+	/// <remarks>
+	/// Assemblies are loaded in the specified order.
+	/// </remarks>
+	[AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
+	public sealed class ExternalToolDependenciesAttribute : Attribute
 	{
-		/// <summary>Path to the dependency assembly, relative to the ExternalTools directory.</summary>
-		public string Path { get; }
+		/// <summary>Paths to the dependency assemblies, relative to the ExternalTools directory.</summary>
+		public string[] Paths { get; }
 
-		/// <param name="path">Path to the dependency assembly, relative to the ExternalTools directory.</param>
-		public ExternalToolDependencyAttribute(string path)
+		/// <param name="paths">Paths to the dependency assemblies, relative to the ExternalTools directory.</param>
+		public ExternalToolDependenciesAttribute(params string[] paths)
 		{
-			Path = path;
+			Paths = paths;
 		}
 	}
 }

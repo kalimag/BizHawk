@@ -122,9 +122,13 @@ namespace BizHawk.Client.EmuHawk
 				var asmBytes = File.ReadAllBytes(fileName);
 				var externalToolFile = Assembly.Load(asmBytes);
 
-				foreach (var toolDependencyAttribute in externalToolFile.GetCustomAttributes<ExternalToolDependencyAttribute>())
+				var toolDependenciesAttr = externalToolFile.GetCustomAttribute<ExternalToolDependenciesAttribute>();
+				if (toolDependenciesAttr != null)
 				{
-					Assembly.LoadFrom(Path.Combine(_config.PathEntries[PathEntryCollection.GLOBAL, "External Tools"].Path, toolDependencyAttribute.Path));
+					foreach (var path in toolDependenciesAttr.Paths)
+					{
+						Assembly.LoadFrom(Path.Combine(_config.PathEntries[PathEntryCollection.GLOBAL, "External Tools"].Path, path));
+					}
 				}
 
 				var entryPoint = externalToolFile.GetTypes()
