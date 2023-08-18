@@ -2640,6 +2640,18 @@ namespace BizHawk.Client.EmuHawk
 			MaybePauseFromMenuOpened();
 		}
 
+		private void MainformMenu_MouseDown(object sender, MouseEventArgs e)
+		{
+			const int WM_NCLBUTTONDOWN = 0xA1;
+			const int HTCAPTION = 0x2;
+
+			// Allow dragging window by the menu bar in borderless mode
+			if (!OSTailoredCode.IsUnixHost && e.Button == MouseButtons.Left && Config.DispChromeFrameWindowed == 0)
+			{
+				Win32Imports.SendMessage(Handle, WM_NCLBUTTONDOWN, (IntPtr)HTCAPTION, IntPtr.Zero);
+			}
+		}
+
 		public void MaybePauseFromMenuOpened()
 		{
 			if (!Config.PauseWhenMenuActivated) return;

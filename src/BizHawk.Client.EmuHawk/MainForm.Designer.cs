@@ -413,6 +413,7 @@ namespace BizHawk.Client.EmuHawk
 			this.MainformMenu.TabIndex = 0;
 			this.MainformMenu.MenuActivate += new System.EventHandler(this.MainformMenu_MenuActivate);
 			this.MainformMenu.MenuDeactivate += new System.EventHandler(this.MainformMenu_MenuDeactivate);
+			this.MainformMenu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainformMenu_MouseDown);
 			// 
 			// FileSubMenu
 			// 
