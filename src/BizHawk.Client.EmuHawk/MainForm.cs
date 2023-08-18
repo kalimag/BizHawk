@@ -1399,6 +1399,29 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				const int WS_SYSMENU = 0x80000;
+				const int WS_MAXIMIZEBOX = 0x10000;
+				const int WS_MINIMIZEBOX = 0x20000;
+
+				var baseParams = base.CreateParams;
+
+				// CreateParams is called by the base ctor before the config is available
+				if (_getGlobalConfig is not null && Config.DispChromeFrameWindowed == 0 && !_inFullscreen)
+				{
+					// allow opening the system window menu in bordlerless mode
+					baseParams.Style |= WS_SYSMENU | WS_MINIMIZEBOX;
+					// don't enable the maximize option because it just acts like buggy fullscreen
+					baseParams.Style &= ~WS_MAXIMIZEBOX;
+				}
+
+				return baseParams;
+			}
+		}
+
 		public void ToggleFullscreen(bool allowSuppress = false)
 		{
 			AutohideCursor(false);
