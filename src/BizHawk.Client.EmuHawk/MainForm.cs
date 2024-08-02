@@ -3922,6 +3922,7 @@ namespace BizHawk.Client.EmuHawk
 			CheatList.SaveOnClose();
 			Emulator.Dispose();
 			Emulator = new NullEmulator();
+			Game = GameInfo.NullInstance;
 			InputManager.ResetMainControllers(_autofireNullControls);
 			RewireSound();
 			RebootStatusBarIcon.Visible = false;
