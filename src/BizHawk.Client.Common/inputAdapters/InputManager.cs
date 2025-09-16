@@ -46,6 +46,14 @@ namespace BizHawk.Client.Common
 		// This relies on a client specific implementation!
 		public ControllerInputCoalescer ControllerInputCoalescer { get; set; } = new();
 
+		/// <summary>
+		/// Input coalescer for external tool and Lua API.
+		/// </summary>
+		/// <remarks>
+		/// Only receives bool buttons, not axes. Receives all inputs regardless of input priority.
+		/// </remarks>
+		public ApiInputCoalescer ApiInputCoalescer { get; } = new();
+
 		public Controller ClientControls { get; set; }
 
 		public Func<(Point Pos, long Scroll, bool LMB, bool MMB, bool RMB, bool X1MB, bool X2MB)> GetMainFormMouseInfo { get; set; }
@@ -183,6 +191,8 @@ namespace BizHawk.Client.Common
 					ControllerInputCoalescer.Receive(ie);
 				}
 				bool didEmuInput = shouldDoEmuInput && isEmuInput;
+
+				ApiInputCoalescer.Receive(ie);
 
 				if (!didHotkey && !didEmuInput)
 				{
