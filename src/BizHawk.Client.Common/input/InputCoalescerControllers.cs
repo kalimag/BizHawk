@@ -51,7 +51,7 @@ namespace BizHawk.Client.Common
 		protected override void ProcessInput(string button, bool state)
 		{
 			base.ProcessInput(button, state);
-			// For controller input, we want Shift+X to register as both Shift and X (for Keyboard controllers)
+			// Register Shift+X as "Shift+X", "Shift", "X"
 			foreach (var s in button.Split('+')) Buttons[s] = state;
 		}
 	}
